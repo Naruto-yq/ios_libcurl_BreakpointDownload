@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E4F15971C9BCC2A0036AD5C /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 0E4F15961C9BCC2A0036AD5C /* index.html */; };
+		0EED6F5E1C97F043001D4577 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EED6F5D1C97F043001D4577 /* libcurl.a */; };
+		0EED6F601C97F05F001D4577 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EED6F5F1C97F05F001D4577 /* libcrypto.a */; };
 		CC080F4C1C917D7C005CC134 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080F4B1C917D7C005CC134 /* main.m */; };
 		CC080F4F1C917D7C005CC134 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080F4E1C917D7C005CC134 /* AppDelegate.m */; };
 		CC080F521C917D7C005CC134 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080F511C917D7C005CC134 /* ViewController.m */; };
@@ -15,6 +18,8 @@
 		CC080F5A1C917D7C005CC134 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC080F581C917D7C005CC134 /* LaunchScreen.storyboard */; };
 		CC080F651C917D7C005CC134 /* libcurl_TestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080F641C917D7C005CC134 /* libcurl_TestTests.m */; };
 		CC080F701C917D7C005CC134 /* libcurl_TestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC080F6F1C917D7C005CC134 /* libcurl_TestUITests.m */; };
+		CC080F801C917DF2005CC134 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC080F7F1C917DF2005CC134 /* libz.tbd */; };
+		CC5A74A21C96B2E100D32D69 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC5A74A11C96B2E100D32D69 /* libssl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E4F15961C9BCC2A0036AD5C /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		0EED6F5D1C97F043001D4577 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		0EED6F5F1C97F05F001D4577 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		CC080F471C917D7C005CC134 /* libcurl_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libcurl_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC080F4B1C917D7C005CC134 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CC080F4D1C917D7C005CC134 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +59,8 @@
 		CC080F6B1C917D7C005CC134 /* libcurl_TestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libcurl_TestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC080F6F1C917D7C005CC134 /* libcurl_TestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libcurl_TestUITests.m; sourceTree = "<group>"; };
 		CC080F711C917D7C005CC134 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC080F7F1C917DF2005CC134 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		CC5A74A11C96B2E100D32D69 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +68,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC080F801C917DF2005CC134 /* libz.tbd in Frameworks */,
+				0EED6F5E1C97F043001D4577 /* libcurl.a in Frameworks */,
+				0EED6F601C97F05F001D4577 /* libcrypto.a in Frameworks */,
+				CC5A74A21C96B2E100D32D69 /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +95,10 @@
 		CC080F3E1C917D7C005CC134 = {
 			isa = PBXGroup;
 			children = (
+				0EED6F5F1C97F05F001D4577 /* libcrypto.a */,
+				0EED6F5D1C97F043001D4577 /* libcurl.a */,
+				CC5A74A11C96B2E100D32D69 /* libssl.a */,
+				CC080F7F1C917DF2005CC134 /* libz.tbd */,
 				CC080F491C917D7C005CC134 /* libcurl_Test */,
 				CC080F631C917D7C005CC134 /* libcurl_TestTests */,
 				CC080F6E1C917D7C005CC134 /* libcurl_TestUITests */,
@@ -109,6 +127,7 @@
 				CC080F561C917D7C005CC134 /* Assets.xcassets */,
 				CC080F581C917D7C005CC134 /* LaunchScreen.storyboard */,
 				CC080F5B1C917D7C005CC134 /* Info.plist */,
+				0E4F15961C9BCC2A0036AD5C /* index.html */,
 				CC080F4A1C917D7C005CC134 /* Supporting Files */,
 			);
 			path = libcurl_Test;
@@ -244,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC080F5A1C917D7C005CC134 /* LaunchScreen.storyboard in Resources */,
+				0E4F15971C9BCC2A0036AD5C /* index.html in Resources */,
 				CC080F571C917D7C005CC134 /* Assets.xcassets in Resources */,
 				CC080F551C917D7C005CC134 /* Main.storyboard in Resources */,
 			);
@@ -413,6 +433,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = libcurl_Test/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.love.qj.libcurl-Test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -424,6 +448,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = libcurl_Test/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.love.qj.libcurl-Test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -496,6 +524,7 @@
 				CC080F761C917D7C005CC134 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC080F771C917D7C005CC134 /* Build configuration list for PBXNativeTarget "libcurl_TestTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +533,7 @@
 				CC080F791C917D7C005CC134 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC080F7A1C917D7C005CC134 /* Build configuration list for PBXNativeTarget "libcurl_TestUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +542,7 @@
 				CC080F7C1C917D7C005CC134 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -2,11 +2,12 @@
 //  AppDelegate.m
 //  libcurl_Test
 //
-//  Created by 杨丽娟 on 16/3/10.
-//  Copyright © 2016年 杨丽娟. All rights reserved.
+//  Created by     on 16/3/10.
+//  Copyright © 2016年     . All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "curl/curl.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    curl_global_init(0L);
     return YES;
 }
 
@@ -40,6 +42,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    curl_global_cleanup();
 }
 
 @end

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+  
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>
+  
+  <link rel="stylesheet" type="text/css" href="lib/jquery.mobile/jquery.mobile-1.4.1.min.css" />
+  <title>框架交互演示</title>
+  <style>
+   img { max-width: 100%; height: auto;} 
+  </style>
+</head>
+<body>
+
+  <!-- 功能导航 -->
+  <div data-role="page" id="main">
+    <div data-role="header">
+      <h1>框架功能交互演示</h1> 
+    </div>
+    <div data-role="content">
+      <ul data-role="listview">
+        <li><a href="#camera" data-transition="slide">相机-相册</a></li>
+        <li><a href="#contacts" data-transition="slide">联系人</a></li>
+        <li><a href="#storage" data-transition="slide">本地存储</a></li>
+        <li><a href="#database" data-transition="slide">数据库</a></li>
+        <li><a href="#geolocation" data-transition="slide">定位</a></li>
+        <li><a href="#vibrate" data-transition="slide">震动</a></li>
+        <li><a href="#gesture" data-transition="slide">手势密码</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 相机相册 -->
+  <div data-role="page" id="camera">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>相机-相册</h1> 
+    </div>
+    <div data-role="content">
+        <a href="#" data-role="button" id="capturePhoto">拍照</a><br>
+        <img style="display:none;" id="smallImage" src="" /><p id="smTitle"></p>
+        <a href="#" data-role="button" id="browsePhoto">照片</a><br>
+        <img style="display:none;" id="largeImage" src="" /><p id="lgTitle"></p>
+    </div>
+    <script type="text/javascript">
+      var pictureSource;
+      var destinationType; //
+
+      document.addEventListener('deviceready', onDeviceReady, false);
+      function onDeviceReady() {
+        pictureSource = navigator.camera.PictureSourceType;
+        destinationType = navigator.camera.DestinationType;
+
+        $("#capturePhoto").on("click", capturePhoto);
+        $("#browsePhoto").on("click", browsePhoto);
+      }
+
+      function capturePhoto() {
+        if (!navigator.camera) {
+            alert("Camera API not supported", "Error");
+            return;
+        }
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, 
+            { quality: 50, 
+              allowEdit: true, 
+              destinationType: destinationType.DATA_URL });
+      }
+
+      function browsePhoto() {
+        navigator.camera.getPicture(onPhotoURISuccess, onFail, 
+            { quality: 50,
+              destinationType: destinationType.FILE_URI,
+              sourceType: pictureSource.PHOTOLIBRARY });
+      }
+      //sourceType 0:Photo Library, 1=Camera, 2=Saved Album
+      //encodingType 0=JPG 1=PNG
+
+      function onFail(message) {
+        alert(message);
+      }
+
+      function onPhotoDataSuccess(imageData) {
+        var smallImage = document.getElementById('smallImage');
+        smallImage.style.display = 'block';
+        smallImage.src = "data:image/jpeg;base64," + imageData;
+      }
+
+      function onPhotoURISuccess(imageURI) {
+        var largeImage = document.getElementById('largeImage');
+        largeImage.style.display = 'block';
+        largeImage.src = imageURI;
+      }
+    </script>
+  </div>
+
+  <!-- 通讯录 -->
+  <div data-role="page" id="contacts">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>联系人</h1> 
+    </div>
+    <div data-role="content">
+      <label for="fname">姓:</label>
+      <input type="text" name="fname" id="fname" value="蟹"><br>
+      <label for="lname">名:</label>
+      <input type="text" name="lname" id="lname" value="老板"><br>
+      <label for="email">Email:</label>
+      <input type="text" name="email" id="email" value="xueq@szkingdom.com"><br>
+      <label for="tel">手机:</label>
+      <input type="text" name="tel" id="tel" value="15008232567"><br>
+      <br>
+      <a href="#" data-role="button" id="saveContacts">保存</a><br>
+    </div>
+    <script type="text/javascript">
+
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        $("#saveContacts").on("click", saveContacts);
+      }
+
+      function saveContacts() {
+        if (!navigator.contacts) {
+            alert("Contacts API not supported", "Error");
+            return;
+        }
+        var contact = navigator.contacts.create();
+        var name = new ContactName();
+        name.givenName = $('#fname').val();
+        name.familyName = $('#lname').val();
+        contact.name = name;
+        contact.displayName = $('#fname').val() + " " + $('#lname').val();
+        contact.emails = [new ContactField('home', $('#email').val(), false)];
+        contact.phoneNumbers = [new ContactField('home', $('#tel').val(), false)];
+        contact.save(
+          function() {
+            alert("联系人保存成功!");
+          },
+          function() {
+            alert("失败!");
+          }
+        );
+      }
+    </script>
+  </div>
+  
+  <!-- 本地存储 -->
+  <div data-role="page" id="storage">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>本地存储</h1> 
+    </div>
+    <div data-role="content">
+      <label for="key">键:</label>
+      <input type="text" id="key" name="key" value="key_name_1"><br>
+      <label for="val">值:</label>
+      <input type="text" id="val" name="val" value="value_1"><br>
+      <a href="#" data-role="button" id="saveItem">保存设置</a><br>
+      <a href="#" data-role="button" id="getItem">读取设置</a><br>
+      <a href="#" data-role="button" id="deleteItem">删除设置</a><br>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        $("#saveItem").on("click", saveItem);
+        $("#getItem").on("click", getItem);
+        $("#deleteItem").on("click", deleteItem);
+      }
+
+      function saveItem() {
+        window.localStorage.setItem($('#key').val(), $('#val').val());
+      }
+      function getItem() {
+        var item_value = window.localStorage.getItem($('#key').val());
+        alert(item_value);
+      }
+      function deleteItem() {
+        window.localStorage.removeItem($('#key').val());
+      }
+    </script>
+  </div>
+
+  <!-- 数据库 -->
+  <div data-role="page" id="database">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>数据库</h1> 
+    </div>
+    <div data-role="content">
+      <label for="id">编号:</label>
+      <input type="text" id="id" name="id" value="1234567"><br>
+      <label for="data">取值:</label>
+      <input type="text" id="data" name="data" value="abcdefg"><br>
+      <a href="#" data-role="button" id="saveToDatabase">保存</a><br>
+      <a href="#" data-role="button" id="getFromDatabase">读取</a><br>
+    </div>
+    <script type="text/javascript">
+      var db;
+
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        $("#saveToDatabase").on("click", saveToDatabase);
+        $("#getFromDatabase").on("click", getFromDatabase);
+
+        db = window.openDatabase("RyanDB", "1.0", "数据库交互演示", 200000);
+        db.transaction(function(tx) {
+            tx.executeSql('DROP TABLE IF EXISTS T_TEST');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS T_TEST (id unique, data)');
+          }, 
+          function(err) {
+            alert(err.code);
+          });
+      }
+
+      function saveToDatabase() {
+        db.transaction(function(tx) {
+          tx.executeSql("INSERT INTO T_TEST (id, data) VALUES (?, ?)",
+                        [$('#id').val(), $('#data').val()],
+                        function(tx, rs) {
+                            alert("保存成功!");
+                        },
+                        function(tx, e) {
+                            alert(e.message);
+                        });
+        });
+      }
+      function getFromDatabase() {
+        db.transaction(function(tx) {
+          tx.executeSql("SELECT id,data FROM T_TEST ORDER BY id",
+                        [],
+                        function (tx, rs) {
+                            for (var i = 0; i < rs.rows.length; i++) {
+                                alert(rs.rows.item(i).id + "=" + rs.rows.item(i).data);
+                            }
+                        },
+                        function(tx, e) {
+                            alert(e.message);
+                        });
+        });
+      }
+    </script>
+  </div>
+  
+  <!-- 定位 -->
+  <div data-role="page" id="geolocation">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>定位</h1> 
+    </div>
+    <div data-role="content">
+      <a href="#" data-role="button" id="startGeolocationg">开始定位</a><br>
+      <a href="#" data-role="button" id="stopGeolocationg">停止定位</a><br>
+      <br><br>
+      <a href="#" data-role="button" id="getCurrentPosition">获取坐标</a><br>
+      <div id="geovals">定位中...</div>
+    </div>
+    <script type="text/javascript">
+      var watchGeoID = null;
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        $("#startGeolocationg").on("click", startGeolocationg);
+        $("#stopGeolocationg").on("click", stopGeolocationg);
+        $("#getCurrentPosition").on("click", getCurrentPosition);
+      }
+
+      function startGeolocationg() {
+        $("#geovals").html("定位中，每5秒定位一次..");
+        var options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
+        watchGeoID = navigator.geolocation.watchPosition(onGeoSuccess, onGeoError, options);
+      }
+
+      function onGeoSuccess(position) {
+        $("#geovals").html( 
+        '<strong>纬度: </strong> ' + position.coords.latitude + '<br />' +
+        '<strong>经度: </strong> ' + position.coords.longitude + ' <br />' +
+        '<strong>高度: </strong> (in meters): ' + position.coords.altitude + ' <br />' +
+        '<strong>精度: </strong> (in meters): ' + position.coords.accuracy + ' <br />' +
+        '<strong>高度精度: </strong> ' + position.coords.altitudeAccuracy + ' <br />' +
+        '<strong>航向: </strong> (direction of travel): ' + position.coords.heading + ' <br />' +
+        '<strong>速度: </strong> (meters per second): ' + position.coords.speed + ' <br />' +
+        '<strong>时间戳: </strong> ' + position.timestamp + ' <br />');
+      }
+      function onGeoError(error) {
+        var element = document.getElementById('geovals');
+        element.innerHTML =+ '<br>' + error.code + error.message;
+      }
+
+      function stopGeolocationg() {
+        var element = document.getElementById('geovals');
+        element.innerHTML = '<span style="color:red">停止定位.</span>';
+        if (watchGeoID) {
+          navigator.geolocation.clearWatch(watchGeoID);
+          watchGeoID = null;
+        }
+      }
+
+      function getCurrentPosition() {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+      }
+      
+      var onSuccess = function(position) {
+          $("#geovals").html('<strong>纬度: </strong>'          + position.coords.latitude          + '<br />' +
+          '<strong>经度: </strong>'         + position.coords.longitude         + '<br />' +
+          '<strong>高度: </strong>'          + position.coords.altitude          + '<br />' +
+          '<strong>精度: </strong>'          + position.coords.accuracy          + '<br />' +
+          '<strong>高度精度: </strong>' + position.coords.altitudeAccuracy  + '<br />' +
+          '<strong>航向: </strong>'           + position.coords.heading           + '<br />' +
+          '<strong>速度: </strong>'             + position.coords.speed             + '<br />' +
+          '<strong>时间戳: </strong>'         + position.timestamp                + '<br />');
+	  };
+      function onError(error) {
+        $("#geovals").html("GPS 定位失败..");
+      }
+    </script>
+  </div>
+
+<!-- 震动 -->
+  <div data-role="page" id="vibrate">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>震动</h1> 
+    </div>
+    <div data-role="content">
+      <a href="#" data-role="button" id="startVibrate">开始震动</a><br>
+      <a href="#" data-role="button" id="stopVibrate">停止震动</a><br>
+      <a href="#" data-role="button" id="skipVibrate">间歇震动</a><br>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        $("#startVibrate").on("click", startVibrate);
+        $("#stopVibrate").on("click", stopVibrate);
+        $("#skipVibrate").on("click", skipVibrate);
+      }
+      function startVibrate() {
+        navigator.vibrate(3000);
+      }
+      function stopVibrate() {
+        navigator.vibrate(0);
+      }
+      function skipVibrate() {
+        navigator.vibrate([3000, 5000, 3000, 5000, 3000, 5000]);
+      }
+    </script>
+  </div>
+  
+  <!-- 手势密码 -->
+  <div data-role="page" id="gesture">
+    <div data-role="header">
+      <a data-role="button" data-rel="back" data-direction="reverse" data-icon="arrow-l">返回</a>
+      <h1>手势密码</h1> 
+    </div>
+    <div data-role="content">
+      <a href="#" data-role="button" id="startGesture">设置密码</a><br>
+      <a href="#" data-role="button" id="verifyGesture">解锁验证</a><br>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        $("#startGesture").on("click", gesture);
+        $("#verifyGesture").on("click", unlock);
+      }
+      
+      function gesture() {
+        alert('gesture')
+        var options = { args: true};
+        navigator.Gesture.gesture(onGestureSuccess, onGestureError, options);
+      }
+
+      function onGestureSuccess(data) {
+       
+      }
+      function onGestureError(error) {
+        
+      }
+      
+       function unlock() {
+           alert('unlock')
+        var options = { args: true};
+        navigator.Gesture.unlock(onUnlockSuccess, onUnlockError, options);
+      }
+
+      function onUnlockSuccess(data) {
+       
+      }
+      function onUnlockError(error) {
+        
+      }
+
+     
+    </script>
+  </div>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="lib/jquery/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="lib/jquery.mobile/jquery.mobile-1.4.1.min.js"></script>
+</body>
+</html>
